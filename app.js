@@ -1,6 +1,5 @@
 // Alotofads - Ad Display Manager
 // This script manages the display and filtering of ad networks
-
 // Sample ad networks data
 const adNetworks = [
   {
@@ -15,28 +14,13 @@ const adNetworks = [
     formats: ['banner', 'sidebar', 'video'],
     unitId: 'ezoic-xxx',
   },
-  {
-    name: 'Mediavine',
-    topic: 'lifestyle',
-    formats: ['banner', 'video'],
-    unitId: 'mediavine-xxx',
-  },
-  {
-    name: 'AdThrive',
-    topic: 'tech',
-    formats: ['sidebar', 'video'],
-    unitId: 'adthrive-xxx',
-  },
 ];
-
 // Topics for dropdown
 const topics = ['all', 'general', 'lifestyle', 'tech', 'fitness', 'cars'];
-
 // State management
 let selectedTopic = 'all';
 let selectedFormats = ['banner', 'sidebar', 'video'];
 let personalized = true;
-
 // Initialize the application
 function init() {
   populateTopicSelector();
@@ -44,7 +28,6 @@ function init() {
   renderAds();
   updatePrivacyDashboard();
 }
-
 // Populate the topic selector dropdown
 function populateTopicSelector() {
   const selector = document.getElementById('topicSelector');
@@ -56,7 +39,6 @@ function populateTopicSelector() {
     selector.appendChild(option);
   });
 }
-
 // Setup event listeners for controls
 function setupEventListeners() {
   // Search button
@@ -65,13 +47,11 @@ function setupEventListeners() {
     console.log('Searching for:', searchTerm);
     renderAds();
   });
-
   // Topic selector
   document.getElementById('topicSelector').addEventListener('change', (e) => {
     selectedTopic = e.target.value;
     renderAds();
   });
-
   // Clear button
   document.getElementById('clearBtn').addEventListener('click', () => {
     document.getElementById('searchInput').value = '';
@@ -79,27 +59,22 @@ function setupEventListeners() {
     document.getElementById('topicSelector').value = 'all';
     renderAds();
   });
-
   // Format filters
   document.getElementById('filterVideo').addEventListener('change', (e) => {
     updateFormats('video', e.target.checked);
   });
-
   document.getElementById('filterBanner').addEventListener('change', (e) => {
     updateFormats('banner', e.target.checked);
   });
-
   document.getElementById('filterSidebar').addEventListener('change', (e) => {
     updateFormats('sidebar', e.target.checked);
   });
-
   // Personalization toggle
   document.getElementById('togglePersonalized').addEventListener('change', (e) => {
     personalized = e.target.checked;
     updatePrivacyDashboard();
   });
 }
-
 // Update selected formats
 function updateFormats(format, checked) {
   if (checked) {
@@ -111,7 +86,6 @@ function updateFormats(format, checked) {
   }
   renderAds();
 }
-
 // Filter ads based on current selections
 function getFilteredAds() {
   return adNetworks.filter((network) => {
@@ -120,32 +94,28 @@ function getFilteredAds() {
     return topicMatch && formatMatch;
   });
 }
-
 // Render ads to the container
 function renderAds() {
   const container = document.getElementById('adContainer');
   const filteredAds = getFilteredAds();
-
   if (filteredAds.length === 0) {
     container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">No ads match your current filters</div>';
     return;
   }
-
   container.innerHTML = filteredAds
     .map(
       (ad) => `
     <div class="ad-item">
-      <h3>${ad.name}</h3>
-      <p><strong>Topic:</strong> ${ad.topic}</p>
-      <p><strong>Formats:</strong> ${ad.formats.join(', ')}</p>
-      <p><strong>Unit ID:</strong> ${ad.unitId}</p>
+      ${ad.name}
+      Topic: ${ad.topic}
+      Formats: ${ad.formats.join(', ')}
+      Unit ID: ${ad.unitId}
       <p style="font-size: 12px; color: #999; margin-top: 10px;">Personalized: ${personalized ? 'Yes' : 'No'}</p>
     </div>
   `
     )
     .join('');
 }
-
 // Update the privacy dashboard
 function updatePrivacyDashboard() {
   const privacyText = document.getElementById('privacyText');
@@ -153,7 +123,6 @@ function updatePrivacyDashboard() {
   const status = personalized ? 'Personalized ads enabled' : 'Personalized ads disabled';
   privacyText.textContent = `${networksCount} networks loaded. ${status}.`;
 }
-
 // Start the application when the DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
