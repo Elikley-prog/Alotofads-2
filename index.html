@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>alotofads.com — A place to view ads</title>
-    <meta name="description" content="alotofads.com — view ads by topic and network" />
-    <meta name="keywords" content="ads,advertisements,google,ezoic,ad networks" />
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="alotofads.com — view ads by topic and network">
+    <meta name="keywords" content="ads,advertisements,google,ezoic,ad networks">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="topbar">
@@ -23,17 +23,109 @@
             <label><input id="togglePersonalized" type="checkbox" checked /> Allow personalized ads</label>
         </div>
     </header>
+
     <section class="filters">
         <label><input id="filterVideo" type="checkbox" checked /> Show video ads</label>
         <label><input id="filterBanner" type="checkbox" checked /> Show banner ads</label>
         <label><input id="filterSidebar" type="checkbox" checked /> Show sidebar ads</label>
     </section>
+
     <main id="adContainer">
-        <!-- JS will populate ad networks and formats here -->
+        <!-- Google AdSense Section -->
+        <section class="ad-network-section">
+            <h2>Google AdSense</h2>
+            
+            <div class="ad-format-group">
+                <h3>Leaderboard</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Large Rectangle</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Medium Rectangle</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Mobile Banner</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Wide Skyscraper</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Multiplex Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Related Search Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Video Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+        </section>
+
+        <!-- Ezoic Section -->
+        <section class="ad-network-section">
+            <h2>Ezoic</h2>
+            
+            <div class="ad-format-group">
+                <h3>Display Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Native Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Video Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Anchor Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Sticky Sidebar Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Vignette Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Side Rails Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+            
+            <div class="ad-format-group">
+                <h3>Rewarded Ads</h3>
+                <div class="ad-placeholder"></div>
+            </div>
+        </section>
     </main>
+
     <footer>
         <small>alotofads.com — demo MVP. Replace placeholders with valid ad unit IDs when ready.</small>
     </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
