@@ -107,7 +107,7 @@ function renderAds() {
       (ad) => `
     <div class="ad-section">
       <h2>${ad.name}</h2>
-      ${ad.formats
+      ${selectedFormats
         .map(
           (format) => `
         <div class="ad-format-group">
