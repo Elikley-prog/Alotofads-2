@@ -1,6 +1,6 @@
 // Alotofads - Ad Display Manager
 // This script manages the display of ad networks
-// Sample ad networks data with real-world ad formats
+// Sample ad networks data with per-format height configuration
 const adNetworks = [
   {
     name: 'Google AdSense',
@@ -33,114 +33,85 @@ const adNetworks = [
     unitId: 'ezoic-xxx',
   },
 ];
+
 // Topics for dropdown
-const topics = ['all', 'general', 'lifestyle', 'tech', 'fitness', 'cars'];
-// State management
-let selectedTopic = 'all';
-let personalized = true;
+const topics = ['general', 'technology', 'business', 'lifestyle'];
+
 // Initialize the application
-function init() {
-  populateTopicSelector();
-  setupEventListeners();
-  renderAds();
-  updatePrivacyDashboard();
-}
-// Populate the topic selector dropdown
-function populateTopicSelector() {
-  const selector = document.getElementById('topicSelector');
-  topics.forEach((topic) => {
+function initializeApp() {
+  const networkSelector = document.getElementById('networkSelect');
+  const mainContent = document.getElementById('mainContent');
+
+  // Populate network selector
+  adNetworks.forEach(network => {
     const option = document.createElement('option');
-    option.value = topic;
-    option.textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
-    selector.appendChild(option);
+    option.value = network.name;
+    option.textContent = network.name;
+    networkSelector.appendChild(option);
   });
+
+  // Load initial network
+  loadNetwork('Google AdSense');
+
+  // Event listeners
+  networkSelector.addEventListener('change', (e) => loadNetwork(e.target.value));
+  document.getElementById('addAdsBtn').addEventListener('click', addRandomAds);
+  document.getElementById('removeAdsBtn').addEventListener('click', removeAllAds);
 }
-// Setup event listeners
-function setupEventListeners() {
-  document.getElementById('searchBtn').addEventListener('click', performSearch);
-  document.getElementById('searchInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') performSearch();
+
+// Load network data and render ads
+function loadNetwork(networkName) {
+  const network = adNetworks.find(n => n.name === networkName);
+  const mainContent = document.getElementById('mainContent');
+
+  // Clear existing content
+  const existingSection = mainContent.querySelector('section');
+  if (existingSection) existingSection.remove();
+
+  // Create network section
+  const section = document.createElement('section');
+  section.innerHTML = `<h2>${network.name}</h2>`;
+
+  // Create ad units based on format configurations
+  const adContainer = document.createElement('div');
+  adContainer.id = 'adContainer';
+
+  network.formats.forEach(format => {
+    const adUnit = document.createElement('div');
+    adUnit.className = 'ad-unit';
+    adUnit.style.minHeight = format.height;
+    adUnit.setAttribute('data-format', format.name);
+    adUnit.textContent = `${format.name} (${format.height})`;
+    adContainer.appendChild(adUnit);
   });
-  document.getElementById('topicSelector').addEventListener('change', (e) => {
-    selectedTopic = e.target.value;
-    renderAds();
-  });
-  document.getElementById('clearBtn').addEventListener('click', resetFilters);
-  document.getElementById('togglePersonalized').addEventListener('change', (e) => {
-    personalized = e.target.checked;
-    updatePrivacyDashboard();
-  });
+
+  section.appendChild(adContainer);
+  mainContent.appendChild(section);
 }
-// Perform search
-function performSearch() {
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-  if (!searchTerm) {
-    renderAds();
-    return;
-  }
-  // Filter ads based on search term
-  renderAds(searchTerm);
+
+// Add random ads
+function addRandomAds() {
+  const adContainer = document.getElementById('adContainer');
+  if (!adContainer) return;
+
+  const newAd = document.createElement('div');
+  newAd.className = 'ad-unit';
+  newAd.textContent = 'New Random Ad';
+  newAd.style.minHeight = '150px';
+
+  adContainer.appendChild(newAd);
 }
-// Reset filters
-function resetFilters() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('topicSelector').value = 'all';
-  selectedTopic = 'all';
-  renderAds();
+
+// Remove all ads
+function removeAllAds() {
+  const adContainer = document.getElementById('adContainer');
+  if (!adContainer) return;
+  adContainer.innerHTML = '';
 }
-// Get filtered ads based on selected topic
-function getFilteredAds(searchTerm = '') {
-  return adNetworks.filter((network) => {
-    const matchesTopic = selectedTopic === 'all' || network.topic === selectedTopic;
-    const matchesSearch = searchTerm === '' || network.name.toLowerCase().includes(searchTerm);
-    return matchesTopic && matchesSearch;
-  });
+
+// Initialize app when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
 }
-// Render ads
-function renderAds(searchTerm = '') {
-  const container = document.getElementById('adContainer');
-  const filteredAds = getFilteredAds(searchTerm);
-  
-  if (filteredAds.length === 0) {
-    container.innerHTML = '<p style="text-align: center; padding: 20px;">No ads found for the selected criteria.</p>';
-    return;
-  }
-  container.innerHTML = '';
-  filteredAds.forEach((network) => {
-    const section = document.createElement('section');
-    section.className = 'ad-network-section';
-    const heading = document.createElement('h2');
-    heading.textContent = network.name;
-    section.appendChild(heading);
-    // Display all formats for this network
-    network.formats.forEach((format) => {
-      const formatGroup = document.createElement('div');
-      formatGroup.className = 'ad-format-group';
-      const formatHeading = document.createElement('h3');
-      formatHeading.textContent = format.name.endsWith('Ads') ? format.name : format.name + ' Ads';
-      formatGroup.appendChild(formatHeading);
-      const placeholder = document.createElement('div');
-      placeholder.className = 'ad-placeholder';
-      placeholder.style.height = format.height;
-      placeholder.textContent = `[${format.name.toUpperCase()} AD]`;
-      formatGroup.appendChild(placeholder);
-      section.appendChild(formatGroup);
-    });
-    container.appendChild(section);
-  });
-}
-// Update privacy dashboard
-function updatePrivacyDashboard() {
-  const privacyText = document.getElementById('privacyText');
-  const toggleCheckbox = document.getElementById('togglePersonalized');
-  
-  if (adNetworks.length > 0) {
-    privacyText.textContent = personalized
-      ? `${adNetworks.length} networks loaded. Personalized ads enabled.`
-      : `${adNetworks.length} networks loaded. Personalized ads disabled.`;
-  } else {
-    privacyText.textContent = 'No networks loaded yet.';
-  }
-}
-// Start the application when DOM is ready
-document.addEventListener('DOMContentLoaded', init);
