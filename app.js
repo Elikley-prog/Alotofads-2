@@ -99,7 +99,7 @@ function renderAds(searchTerm = '') {
       const formatGroup = document.createElement('div');
       formatGroup.className = 'ad-format-group';
       const formatHeading = document.createElement('h3');
-      formatHeading.textContent = format + ' Ads';
+      formatHeading.textContent = format.endsWith('Ads') ? format : format + ' Ads';
       formatGroup.appendChild(formatHeading);
       const placeholder = document.createElement('div');
       placeholder.className = 'ad-placeholder';
