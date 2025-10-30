@@ -99,18 +99,17 @@ function renderAds() {
   const container = document.getElementById('adContainer');
   const filteredAds = getFilteredAds();
   if (filteredAds.length === 0) {
-    container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">No ads match your current filters</div>';
+    container.innerHTML = '<div node="_115" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">No ads match your current filters</div>';
     return;
   }
   container.innerHTML = filteredAds
     .map(
       (ad) => `
-    <div class="ad-item">
+    <div class="ad-item" node="_122">
       ${ad.name}
       Topic: ${ad.topic}
       Formats: ${ad.formats.join(', ')}
       Unit ID: ${ad.unitId}
-      <p style="font-size: 12px; color: #999; margin-top: 10px;">Personalized: ${personalized ? 'Yes' : 'No'}</p>
     </div>
   `
     )
