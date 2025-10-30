@@ -99,17 +99,24 @@ function renderAds() {
   const container = document.getElementById('adContainer');
   const filteredAds = getFilteredAds();
   if (filteredAds.length === 0) {
-    container.innerHTML = '<div node="_115" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">No ads match your current filters</div>';
+    container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">No ads match your current filters</div>';
     return;
   }
   container.innerHTML = filteredAds
     .map(
       (ad) => `
-    <div class="ad-item" node="_122">
-      ${ad.name}
-      Topic: ${ad.topic}
-      Formats: ${ad.formats.join(', ')}
-      Unit ID: ${ad.unitId}
+    <div class="ad-section">
+      <h2>${ad.name}</h2>
+      ${ad.formats
+        .map(
+          (format) => `
+        <div class="ad-format-group">
+          <h3>${format.charAt(0).toUpperCase() + format.slice(1)}</h3>
+          <div class="ad-placeholder"></div>
+        </div>
+      `
+        )
+        .join('')}
     </div>
   `
     )
