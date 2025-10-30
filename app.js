@@ -5,13 +5,31 @@ const adNetworks = [
   {
     name: 'Google AdSense',
     topic: 'general',
-    formats: ['Leaderboard', 'Large Rectangle', 'Medium Rectangle', 'Mobile Banner', 'Wide Skyscraper', 'Multiplex Ads', 'Related Search Ads', 'Video Ads'],
+    formats: [
+      { name: 'Leaderboard', height: '100px' },
+      { name: 'Large Rectangle', height: '290px' },
+      { name: 'Medium Rectangle', height: '260px' },
+      { name: 'Mobile Banner', height: '60px' },
+      { name: 'Wide Skyscraper', height: '610px' },
+      { name: 'Multiplex Ads', height: '310px' },
+      { name: 'Related Search Ads', height: '100px' },
+      { name: 'Video Ads', height: '325px' }
+    ],
     unitId: 'ca-pub-xxx',
   },
   {
     name: 'Ezoic',
     topic: 'general',
-    formats: ['Display Ads', 'Native Ads', 'Video Ads', 'Anchor Ads', 'Sticky Sidebar Ads', 'Vignette Ads', 'Side Rails Ads', 'Rewarded Ads'],
+    formats: [
+      { name: 'Display Ads', height: '290px' },
+      { name: 'Native Ads', height: '260px' },
+      { name: 'Video Ads', height: '325px' },
+      { name: 'Anchor Ads', height: '100px' },
+      { name: 'Sticky Sidebar Ads', height: '610px' },
+      { name: 'Vignette Ads', height: '325px' },
+      { name: 'Side Rails Ads', height: '610px' },
+      { name: 'Rewarded Ads', height: '325px' }
+    ],
     unitId: 'ezoic-xxx',
   },
 ];
@@ -99,11 +117,12 @@ function renderAds(searchTerm = '') {
       const formatGroup = document.createElement('div');
       formatGroup.className = 'ad-format-group';
       const formatHeading = document.createElement('h3');
-      formatHeading.textContent = format.endsWith('Ads') ? format : format + ' Ads';
+      formatHeading.textContent = format.name.endsWith('Ads') ? format.name : format.name + ' Ads';
       formatGroup.appendChild(formatHeading);
       const placeholder = document.createElement('div');
       placeholder.className = 'ad-placeholder';
-      placeholder.textContent = `[${format.toUpperCase()} AD]`;
+      placeholder.style.height = format.height;
+      placeholder.textContent = `[${format.name.toUpperCase()} AD]`;
       formatGroup.appendChild(placeholder);
       section.appendChild(formatGroup);
     });
