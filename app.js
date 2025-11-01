@@ -1,35 +1,35 @@
-// app.js — updated to set per-format heights exactly as requested
+// Configuration for ad networks and formats
 const networksConfig = {
   google: {
-    name: 'Google AdSense (placeholder)',
-    enabled: true,
+    name: 'Google AdSense',
     formats: {
-      leaderboard: { label: 'Leaderboard', height: 100, units: ['ca-pub-REPLACE/slot1', 'ca-pub-REPLACE/slot2'] },
-      large_rectangle: { label: 'Large Rectangle', height: 290, units: ['ca-pub-REPLACE/large1'] },
-      medium_rectangle: { label: 'Medium Rectangle', height: 260, units: ['ca-pub-REPLACE/medium1'] },
-      mobile_banner: { label: 'Mobile Banner', height: 60, units: ['ca-pub-REPLACE/mobile1'] },
-      wide_skyscraper: { label: 'Wide Skyscraper', height: 610, units: ['ca-pub-REPLACE/wide1'] },
-      multiplex: { label: 'Multiplex Ads', height: 310, units: ['ca-pub-REPLACE/multiplex1'] },
-      related_search: { label: 'Related Search Ads', height: 100, units: ['ca-pub-REPLACE/related1'] },
-      video: { label: 'Video Ads', height: 325, units: ['ca-pub-REPLACE/v1'] }
+      Leaderboard: { height: 100 },
+      'Large Rectangle': { height: 290 },
+      'Medium Rectangle': { height: 260 },
+      'Mobile Banner': { height: 60 },
+      'Wide Skyscraper': { height: 610 },
+      'Multiplex Ads': { height: 310 },
+      'Related Search Ads': { height: 100 },
+      'Video Ads': { height: 325 }
     }
   },
   ezoic: {
-    name: 'Ezoic (placeholder)',
-    enabled: true,
+    name: 'Ezoic',
     formats: {
-      display: { label: 'Display Ads', height: 290, units: ['ezoic-b-1'] },
-      native: { label: 'Native Ads', height: 260, units: ['ezoic-n-1'] },
-      video: { label: 'Video Ads', height: 325, units: ['ezoic-v-1'] },
-      anchor: { label: 'Anchor Ads', height: 100, units: ['ezoic-anchor-1'] },
-      sticky_sidebar: { label: 'Sticky Sidebar Ads', height: 610, units: ['ezoic-sticky-1'] },
-      vignette: { label: 'Vignette Ads', height: 325, units: ['ezoic-vig-1'] },
-      siderails: { label: 'Side Rails Ads', height: 610, units: ['ezoic-rails-1'] },
-      rewarded: { label: 'Rewarded Ads', height: 325, units: ['ezoic-reward-1'] }
+      'Display Ads': { height: 290 },
+      'Native Ads': { height: 260 },
+      'Video Ads': { height: 325 },
+      'Anchor Ads': { height: 100 },
+      'Sticky Sidebar Ads': { height: 610 },
+      'Vignette Ads': { height: 325 },
+      'Side Rails Ads': { height: 610 },
+      'Rewarded Ads': { height: 325 }
     }
   }
 };
+
 const popularTopics = ['fitness', 'cars', 'technology', 'travel', 'finance', 'pets', 'fashion'];
+
 const state = {
   topic: '',
   personalized: true,
@@ -40,103 +40,111 @@ const state = {
   }
 };
 
+// DOM helper
 function $(id) {
   return document.getElementById(id);
 }
 
+// Initialize UI and event listeners
 function init() {
-  const sel = $('topicSelector');
-  popularTopics.forEach(t => {
-    const o = document.createElement('option');
-    o.value = t; o.textContent = t;
-    sel.appendChild(o);
+  // Populate topic selector
+  const selector = $('topicSelector');
+  popularTopics.forEach(topic => {
+    const option = document.createElement('option');
+    option.value = topic;
+    option.textContent = topic;
+    selector.appendChild(option);
   });
 
-  $('topicSelector').addEventListener('change', (e) => {
+  // Topic selector listener
+  selector.addEventListener('change', e => {
     state.topic = e.target.value;
     renderAllAds();
   });
 
-  $('videoFilter').addEventListener('change', (e) => {
-    state.filters.video = e.target.checked;
-    renderAllAds();
-  });
-
-  $('bannerFilter').addEventListener('change', (e) => {
+  // Filter listeners
+  $('filterBanner').addEventListener('change', e => {
     state.filters.banner = e.target.checked;
     renderAllAds();
   });
 
-  $('sidebarFilter').addEventListener('change', (e) => {
+  $('filterVideo').addEventListener('change', e => {
+    state.filters.video = e.target.checked;
+    renderAllAds();
+  });
+
+  $('filterSidebar').addEventListener('change', e => {
     state.filters.sidebar = e.target.checked;
     renderAllAds();
   });
 
-  $('personalizationToggle').addEventListener('change', (e) => {
+  // Personalization toggle
+  $('togglePersonalized').addEventListener('change', e => {
     state.personalized = e.target.checked;
+    updatePrivacy();
   });
 
   renderAllAds();
 }
 
-function matchesFilter(formatObj) {
-  const label = (formatObj.label || '').toLowerCase();
-  if (label.includes('video')) return state.filters.video;
-  if (label.includes('mobile') || label.includes('leaderboard') || label.includes('display') || label.includes('related') || label.includes('anchor')) return state.filters.banner;
-  if (label.includes('sidebar') || label.includes('side') || label.includes('skyscraper') || label.includes('rails') || label.includes('sticky')) return state.filters.sidebar;
-  return true;
+// Determine if a format should be shown based on active filters
+function shouldShowFormat(formatName) {
+  const name = formatName.toLowerCase();
+  
+  if (name.includes('video')) return state.filters.video;
+  if (name.includes('sidebar') || name.includes('skyscraper') || name.includes('rail') || name.includes('sticky')) {
+    return state.filters.sidebar;
+  }
+  return state.filters.banner;
 }
 
+// Render all ad networks and formats
 function renderAllAds() {
   const container = $('adContainer');
   container.innerHTML = '';
-  for (const netKey of Object.keys(networksConfig)) {
-    const net = networksConfig[netKey];
-    if (!net.enabled) continue;
+
+  for (const [networkKey, network] of Object.entries(networksConfig)) {
     const section = document.createElement('section');
-    section.className = 'network-section';
-    const header = document.createElement('div');
-    header.className = 'network-header';
-    header.innerHTML = `<strong>${net.name}</strong><div class="muted">topic: ${state.topic || 'general'}</div>`;
-    section.appendChild(header);
-    for (const [formatKey, formatObj] of Object.entries(net.formats)) {
-      if (!matchesFilter(formatObj)) continue;
-      const formatRow = document.createElement('div');
-      formatRow.className = 'format-row';
-      const ftitle = document.createElement('div');
-      ftitle.className = 'format-title';
-      ftitle.textContent = formatObj.label;
-      formatRow.appendChild(ftitle);
-      const adStrip = document.createElement('div');
-      adStrip.className = 'ad-strip';
-      // set CSS variable so stylesheet controls spacing
-      adStrip.style.setProperty('--format-height', `${formatObj.height}px`);
-      const slotsCount = 6;
-      for (let i = 0; i < slotsCount; i++) {
-        const slot = createAdSlot(netKey, formatObj, i, formatKey);
-        adStrip.appendChild(slot);
-      }
-      formatRow.appendChild(adStrip);
-      section.appendChild(formatRow);
+    section.className = 'ad-network-section';
+    
+    const title = document.createElement('h2');
+    title.textContent = network.name;
+    section.appendChild(title);
+
+    for (const [formatName, formatConfig] of Object.entries(network.formats)) {
+      if (!shouldShowFormat(formatName)) continue;
+
+      const formatGroup = document.createElement('div');
+      formatGroup.className = 'ad-format-group';
+      formatGroup.setAttribute('data-format', formatName);
+
+      const formatTitle = document.createElement('h3');
+      formatTitle.textContent = formatName;
+      formatGroup.appendChild(formatTitle);
+
+      const placeholder = document.createElement('div');
+      placeholder.className = 'ad-placeholder';
+      placeholder.textContent = `[${formatName}]`;
+      formatGroup.appendChild(placeholder);
+
+      section.appendChild(formatGroup);
     }
+
     container.appendChild(section);
   }
-  renderPrivacy();
+
+  updatePrivacy();
 }
 
-function createAdSlot(netKey, formatObj, slotIndex, formatKey) {
-  const slot = document.createElement('div');
-  slot.className = 'ad-slot';
-  const unitId = formatObj.units[slotIndex % formatObj.units.length];
-  slot.innerHTML = `<div>${unitId}</div><div class="meta">mock ad</div>`;
-  return slot;
-}
-
-function renderPrivacy() {
-  const footer = document.querySelector('footer');
-  if (footer) {
-    footer.innerHTML = `<small>Privacy settings: <strong>${state.personalized ? 'Personalized' : 'Non-Personalized'} Ads</strong></small>`;
+// Update privacy dashboard
+function updatePrivacy() {
+  const privacyText = $('privacyText');
+  if (privacyText) {
+    const networks = Object.keys(networksConfig).join(', ');
+    const personalizedText = state.personalized ? 'Personalized' : 'Non-Personalized';
+    privacyText.textContent = `Networks loaded: ${networks} | ${personalizedText} ads`;
   }
 }
 
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', init);
