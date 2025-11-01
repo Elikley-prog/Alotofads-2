@@ -3,7 +3,7 @@ const networksConfig = {
   google: {
     name: 'Google AdSense',
     formats: {
-      Leaderboard: { height: 100 },
+      'Leaderboard': { height: 100 },
       'Large Rectangle': { height: 290 },
       'Medium Rectangle': { height: 260 },
       'Mobile Banner': { height: 60 },
@@ -34,117 +34,70 @@ const state = {
   topic: '',
   personalized: true,
   filters: {
-    banner: true,
-    video: false,
-    sidebar: true
+    minHeight: 0,
+    maxHeight: 650
   }
 };
 
-// DOM helper
-function $(id) {
-  return document.getElementById(id);
-}
-
-// Initialize UI and event listeners
-function init() {
-  // Populate topic selector
-  const selector = $('topicSelector');
-  popularTopics.forEach(topic => {
-    const option = document.createElement('option');
-    option.value = topic;
-    option.textContent = topic;
-    selector.appendChild(option);
-  });
-
-  // Topic selector listener
-  selector.addEventListener('change', e => {
-    state.topic = e.target.value;
-    renderAllAds();
-  });
-
-  // Filter listeners
-  $('filterBanner').addEventListener('change', e => {
-    state.filters.banner = e.target.checked;
-    renderAllAds();
-  });
-
-  $('filterVideo').addEventListener('change', e => {
-    state.filters.video = e.target.checked;
-    renderAllAds();
-  });
-
-  $('filterSidebar').addEventListener('change', e => {
-    state.filters.sidebar = e.target.checked;
-    renderAllAds();
-  });
-
-  // Personalization toggle
-  $('togglePersonalized').addEventListener('change', e => {
-    state.personalized = e.target.checked;
-    updatePrivacy();
-  });
-
-  renderAllAds();
-}
-
-// Determine if a format should be shown based on active filters
-function shouldShowFormat(formatName) {
-  const name = formatName.toLowerCase();
-  
-  if (name.includes('video')) return state.filters.video;
-  if (name.includes('sidebar') || name.includes('skyscraper') || name.includes('rail') || name.includes('sticky')) {
-    return state.filters.sidebar;
-  }
-  return state.filters.banner;
-}
-
-// Render all ad networks and formats
-function renderAllAds() {
-  const container = $('adContainer');
+// Hybrid Layout Generator: ad-network-card > ad-format-card > ad-slots-wrapper > ad-slot
+function generateHybridLayout() {
+  const container = document.getElementById('ad-container');
   container.innerHTML = '';
 
-  for (const [networkKey, network] of Object.entries(networksConfig)) {
-    const section = document.createElement('section');
-    section.className = 'ad-network-section';
+  Object.entries(networksConfig).forEach(([networkKey, networkData]) => {
+    // Create ad-network-card (outer layer)
+    const networkCard = document.createElement('div');
+    networkCard.className = 'ad-network-card';
+
+    // Create ad-network-header
+    const networkHeader = document.createElement('div');
+    networkHeader.className = 'ad-network-header';
     
-    const title = document.createElement('h2');
-    title.textContent = network.name;
-    section.appendChild(title);
+    const networkTitle = document.createElement('h2');
+    networkTitle.textContent = networkData.name;
+    networkHeader.appendChild(networkTitle);
+    networkCard.appendChild(networkHeader);
 
-    for (const [formatName, formatConfig] of Object.entries(network.formats)) {
-      if (!shouldShowFormat(formatName)) continue;
+    // Iterate through ad formats
+    Object.entries(networkData.formats).forEach(([formatName, formatConfig]) => {
+      // Create ad-format-card (subcard)
+      const formatCard = document.createElement('div');
+      formatCard.className = 'ad-format-card';
 
-      const formatGroup = document.createElement('div');
-      formatGroup.className = 'ad-format-group';
-      formatGroup.setAttribute('data-format', formatName);
-
+      // Add format title
       const formatTitle = document.createElement('h3');
       formatTitle.textContent = formatName;
-      formatGroup.appendChild(formatTitle);
+      formatCard.appendChild(formatTitle);
 
-      const placeholder = document.createElement('div');
-      placeholder.className = 'ad-placeholder';
-      placeholder.textContent = `[${formatName}]`;
-      formatGroup.appendChild(placeholder);
+      // Create ad-slots-wrapper
+      const slotsWrapper = document.createElement('div');
+      slotsWrapper.className = 'ad-slots-wrapper';
 
-      section.appendChild(formatGroup);
-    }
+      // Create 3 ad slots for each format
+      for (let i = 1; i <= 3; i++) {
+        const adSlot = document.createElement('div');
+        adSlot.className = 'ad-slot';
+        adSlot.setAttribute('data-network', networkKey);
+        adSlot.setAttribute('data-format', formatName);
+        adSlot.setAttribute('data-slot', i);
+        adSlot.textContent = `${formatName} #${i}`;
+        slotsWrapper.appendChild(adSlot);
+      }
 
-    container.appendChild(section);
-  }
+      formatCard.appendChild(slotsWrapper);
+      networkCard.appendChild(formatCard);
+    });
 
-  updatePrivacy();
+    container.appendChild(networkCard);
+  });
 }
 
-// Update privacy dashboard
-function updatePrivacy() {
-  const privacyText = $('privacyText');
-  if (privacyText) {
-    const networks = Object.keys(networksConfig).join(', ');
-    const personalizedText = state.personalized ? 'Personalized' : 'Non-Personalized';
-    privacyText.textContent = `Networks loaded: ${networks} | ${personalizedText} ads`;
-  }
-}
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  generateHybridLayout();
+});
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', init);
+// Re-render when state changes
+function renderAds() {
+  generateHybridLayout();
+}
