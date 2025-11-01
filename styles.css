@@ -15,18 +15,15 @@
   --anchor-ads-height: 100px;
   --video-height: 325px;
 }
-
 * {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   background: var(--bg);
   color: #222;
 }
-
 .topbar {
   display: flex;
   align-items: center;
@@ -38,7 +35,6 @@ body {
   top: 0;
   z-index: 10;
 }
-
 .topbar input[type="text"],
 .topbar input[type="checkbox"],
 .topbar select,
@@ -49,44 +45,35 @@ body {
   font-size: 14px;
   cursor: pointer;
 }
-
 .topbar input[type="checkbox"] {
   width: 18px;
   height: 18px;
   cursor: pointer;
 }
-
 .topbar button {
   background: var(--accent);
   color: white;
   border: none;
   cursor: pointer;
 }
-
 .topbar button:hover {
   opacity: 0.9;
 }
-
 .logo {
   font-weight: bold;
   font-size: 20px;
   margin-right: auto;
 }
-
 main {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: var(--gap);
+  display: block;
   padding: var(--gap);
 }
-
 .ad-format-group {
   border: 2px solid #e6e6e6;
   padding: var(--gap);
   border-radius: 8px;
   background: white;
 }
-
 .ad-format-group h3 {
   margin: 0;
   font-size: 16px;
@@ -94,25 +81,21 @@ main {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 .ad-section {
   margin-bottom: 24px;
   padding-bottom: 12px;
   border-bottom: 1px solid #e6e6e6;
 }
-
 .ad-section:last-child {
   margin-bottom: 0;
   border-bottom: none;
 }
-
 .ad-container {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap);
   margin-top: 12px;
 }
-
 .ad-placeholder {
   display: flex;
   align-items: center;
@@ -126,88 +109,72 @@ main {
   padding: 8px;
   text-align: center;
 }
-
 /* Google AdSense Formats */
 .ad-format-group[data-format="Leaderboard"] .ad-placeholder {
   width: 728px;
   height: var(--leaderboard-height);
 }
-
 .ad-format-group[data-format="Large Rectangle"] .ad-placeholder {
   width: 336px;
   height: var(--large-rect-height);
 }
-
 .ad-format-group[data-format="Medium Rectangle"] .ad-placeholder {
   width: 300px;
   height: var(--medium-rect-height);
 }
-
 .ad-format-group[data-format="Mobile Banner"] .ad-placeholder {
   width: 320px;
   height: var(--mobile-banner-height);
 }
-
 .ad-format-group[data-format="Wide Skyscraper"] .ad-placeholder {
   width: 160px;
   height: var(--wide-skyscraper-height);
 }
-
 .ad-format-group[data-format="Multiplex Ads"] .ad-placeholder {
   width: 300px;
   height: var(--multiplex-height);
 }
-
 .ad-format-group[data-format="Related Search Ads"] .ad-placeholder {
   width: 300px;
   height: var(--related-search-height);
 }
-
 /* Ezoic Formats */
 .ad-format-group[data-format="Display Ads"] .ad-placeholder {
   width: 728px;
   height: var(--leaderboard-height);
 }
-
 .ad-format-group[data-format="Native Ads"] .ad-placeholder {
   width: 100%;
   height: 120px;
 }
-
 .ad-format-group[data-format="Anchor Ads"] .ad-placeholder {
   height: var(--related-search-height);
 }
-
 .ad-format-group[data-format="Sticky Sidebar Ads"] .ad-placeholder {
   width: 300px;
   height: var(--medium-rect-height);
 }
-
 .ad-format-group[data-format="Vignette Ads"] .ad-placeholder {
   width: 100%;
   height: 200px;
 }
-
 .ad-format-group[data-format="Side Rails Ads"] .ad-placeholder {
   width: 120px;
   height: 600px;
 }
-
 .ad-format-group[data-format="Rewarded Ads"] .ad-placeholder {
   width: 300px;
   height: 250px;
 }
-
 /* Video */
 .ad-format-group[data-format="Video"] .ad-placeholder {
   width: 640px;
   height: var(--video-height);
 }
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   main {
-    grid-template-columns: 1fr;
+    display: block;
   }
   
   .ad-format-group[data-format="Leaderboard"] .ad-placeholder {
@@ -225,4 +192,14 @@ main {
   .ad-format-group[data-format="Video"] .ad-placeholder {
     width: 100%;
   }
+}
+
+/* Ensure all ad network sections stack vertically */
+main #adContainer {
+  display: block; /* prevents side-by-side layout */
+}
+.ad-network-section {
+  display: block;
+  width: 100%;
+  margin-bottom: 48px; /* spacing between Google and Ezoic */
 }
