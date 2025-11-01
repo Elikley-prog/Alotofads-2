@@ -3,7 +3,6 @@
   --accent: #0b76ef;
   --muted: #666;
   --bg: #fafafa;
-
   /* Per-format heights */
   --leaderboard-height: 100px;
   --large-rect-height: 290px;
@@ -12,20 +11,18 @@
   --wide-skyscraper-height: 610px;
   --multiplex-height: 310px;
   --related-search-height: 100px;
+  --anchor-ads-height: 100px;
   --video-height: 325px;
 }
-
 * {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   background: var(--bg);
   color: #222;
 }
-
 .topbar {
   display: flex;
   align-items: center;
@@ -37,20 +34,17 @@ body {
   top: 0;
   z-index: 10;
 }
-
 .brand {
   font-weight: 700;
   font-size: 1.1rem;
   margin-right: 8px;
 }
-
 .controls {
   display: flex;
   gap: var(--gap);
   margin-left: auto;
   align-items: center;
 }
-
 .controls input[type="text"],
 .controls select,
 .controls button {
@@ -59,14 +53,12 @@ body {
   border-radius: 4px;
   font-size: 14px;
 }
-
 .controls button {
   background: var(--accent);
   color: white;
   cursor: pointer;
   border: none;
 }
-
 .privacy {
   margin-left: 20px;
   padding: 10px;
@@ -74,14 +66,12 @@ body {
   border-radius: 4px;
   font-size: 13px;
 }
-
 .privacy label {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-top: 8px;
 }
-
 .filters {
   padding: 12px 16px;
   background: white;
@@ -89,7 +79,6 @@ body {
   display: flex;
   gap: 20px;
 }
-
 .filters label {
   display: flex;
   align-items: center;
@@ -97,33 +86,27 @@ body {
   cursor: pointer;
   font-size: 14px;
 }
-
 main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
 }
-
 section.ad-network-section {
   margin-bottom: 32px;
 }
-
 section.ad-network-section h2 {
   margin: 0 0 16px 0;
   font-size: 1.4rem;
   color: #222;
 }
-
 .ad-format-group {
   margin-bottom: 24px;
 }
-
 .ad-format-group h3 {
   margin: 0 0 8px 0;
   font-size: 1rem;
   color: #333;
 }
-
 .ad-placeholder {
   width: 100%;
   background-color: #f1f1f1;
@@ -134,68 +117,52 @@ section.ad-network-section h2 {
   color: #999;
   font-size: 13px;
 }
-
 /* Per-format heights using data attributes */
 .ad-format-group[data-format="Leaderboard"] .ad-placeholder {
   height: var(--leaderboard-height);
 }
-
 .ad-format-group[data-format="Large Rectangle"] .ad-placeholder {
   height: var(--large-rect-height);
 }
-
 .ad-format-group[data-format="Medium Rectangle"] .ad-placeholder {
   height: var(--medium-rect-height);
 }
-
 .ad-format-group[data-format="Mobile Banner"] .ad-placeholder {
   height: var(--mobile-banner-height);
 }
-
 .ad-format-group[data-format="Wide Skyscraper"] .ad-placeholder {
   height: var(--wide-skyscraper-height);
 }
-
 .ad-format-group[data-format="Multiplex Ads"] .ad-placeholder {
   height: var(--multiplex-height);
 }
-
 .ad-format-group[data-format="Related Search Ads"] .ad-placeholder {
   height: var(--related-search-height);
 }
-
 .ad-format-group[data-format="Video Ads"] .ad-placeholder {
   height: var(--video-height);
 }
-
 .ad-format-group[data-format="Display Ads"] .ad-placeholder {
   height: var(--large-rect-height);
 }
-
 .ad-format-group[data-format="Native Ads"] .ad-placeholder {
   height: var(--medium-rect-height);
 }
-
 .ad-format-group[data-format="Anchor Ads"] .ad-placeholder {
-  height: var(--mobile-banner-height);
+  height: var(--anchor-ads-height);
 }
-
 .ad-format-group[data-format="Sticky Sidebar Ads"] .ad-placeholder {
   height: var(--wide-skyscraper-height);
 }
-
 .ad-format-group[data-format="Vignette Ads"] .ad-placeholder {
   height: var(--video-height);
 }
-
 .ad-format-group[data-format="Side Rails Ads"] .ad-placeholder {
   height: var(--wide-skyscraper-height);
 }
-
 .ad-format-group[data-format="Rewarded Ads"] .ad-placeholder {
   height: var(--video-height);
 }
-
 footer {
   text-align: center;
   padding: 20px;
@@ -204,7 +171,6 @@ footer {
   font-size: 13px;
   color: var(--muted);
 }
-
 .hidden {
   display: none;
 }
