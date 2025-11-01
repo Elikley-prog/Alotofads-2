@@ -104,3 +104,8 @@ body
   font-size: 14px; 
   text-align: center; 
 }
+
+/* Format-specific height overrides */
+.ad-format-group[data-format="Anchor Ads"] .ad-placeholder {
+  height: var(--mobile-banner-height);
+}
