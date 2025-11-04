@@ -49,24 +49,26 @@ function generateHybridLayout() {
     const networkCard = document.createElement('div');
     networkCard.className = 'ad-network-card';
 
-    // Create ad-network-header
+    // Create ad-network-header with visible heading
     const networkHeader = document.createElement('div');
     networkHeader.className = 'ad-network-header';
     
     const networkTitle = document.createElement('h2');
     networkTitle.textContent = networkData.name;
+    networkTitle.className = 'ad-network-title';
     networkHeader.appendChild(networkTitle);
     networkCard.appendChild(networkHeader);
 
     // Iterate through ad formats
     Object.entries(networkData.formats).forEach(([formatName, formatConfig]) => {
-      // Create ad-format-card (subcard)
+      // Create ad-format-card (subcard) with visible heading
       const formatCard = document.createElement('div');
       formatCard.className = 'ad-format-card';
 
-      // Add format title
+      // Add format title as visible heading
       const formatTitle = document.createElement('h3');
       formatTitle.textContent = formatName;
+      formatTitle.className = 'ad-format-title';
       formatCard.appendChild(formatTitle);
 
       // Create ad-slots-wrapper
