@@ -28,78 +28,58 @@ const networksConfig = {
   }
 };
 
-const popularTopics = ['fitness', 'cars', 'technology', 'travel', 'finance', 'pets', 'fashion'];
-
-const state = {
-  topic: '',
-  personalized: true,
-  filters: {
-    minHeight: 0,
-    maxHeight: 650
-  }
-};
-
 // Hybrid Layout Generator: ad-network-card > ad-format-card > ad-slots-wrapper > ad-slot
 function generateHybridLayout() {
-  const container = document.getElementById('adContainer');
+  const container = document.getElementById('ad-container');
+  if (!container) return;
   container.innerHTML = '';
-
   Object.entries(networksConfig).forEach(([networkKey, networkData]) => {
-    // Create ad-network-card (outer layer)
+    // Ad Network Card
     const networkCard = document.createElement('div');
     networkCard.className = 'ad-network-card';
 
-    // Create ad-network-header with visible heading
+    // Ad Network Header
     const networkHeader = document.createElement('div');
     networkHeader.className = 'ad-network-header';
-    
     const networkTitle = document.createElement('h2');
     networkTitle.textContent = networkData.name;
-    networkTitle.className = 'ad-network-title';
     networkHeader.appendChild(networkTitle);
     networkCard.appendChild(networkHeader);
 
-    // Iterate through ad formats
+    // Ad Formats (subcards)
     Object.entries(networkData.formats).forEach(([formatName, formatConfig]) => {
-      // Create ad-format-card (subcard) with visible heading
       const formatCard = document.createElement('div');
       formatCard.className = 'ad-format-card';
 
-      // Add format title as visible heading
+      // Format Subheading
       const formatTitle = document.createElement('h3');
       formatTitle.textContent = formatName;
-      formatTitle.className = 'ad-format-title';
       formatCard.appendChild(formatTitle);
 
-      // Create ad-slots-wrapper
+      // Ad Slots Wrapper
       const slotsWrapper = document.createElement('div');
       slotsWrapper.className = 'ad-slots-wrapper';
-
-      // Create 3 ad slots for each format
       for (let i = 1; i <= 3; i++) {
         const adSlot = document.createElement('div');
         adSlot.className = 'ad-slot';
         adSlot.setAttribute('data-network', networkKey);
         adSlot.setAttribute('data-format', formatName);
         adSlot.setAttribute('data-slot', i);
+        adSlot.style.height = formatConfig.height + 'px'; // Per-format height!
         adSlot.textContent = `${formatName} #${i}`;
         slotsWrapper.appendChild(adSlot);
       }
-
       formatCard.appendChild(slotsWrapper);
       networkCard.appendChild(formatCard);
     });
-
     container.appendChild(networkCard);
   });
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   generateHybridLayout();
 });
 
-// Re-render when state changes
 function renderAds() {
   generateHybridLayout();
 }
