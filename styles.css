@@ -259,3 +259,59 @@ main #adContainer {
   width: 100%;
   margin-bottom: 48px; /* spacing between Google and Ezoic */
 }
+
+/* Ad Network Cards (outer layer) */
+.ad-network-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+.ad-network-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.ad-network-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+/* Ad Format Subcards */
+.ad-format-card {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  padding: 16px;
+}
+
+.ad-format-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+
+/* Ad Slots */
+.ad-slots-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ad-slot {
+  flex: 1 1 calc(33.333% - 16px);
+  min-width: 200px;
+  background-color: #f1f1f1;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-size: 14px;
+  text-align: center;
+}
