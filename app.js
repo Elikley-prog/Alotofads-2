@@ -30,8 +30,7 @@ const networksConfig = {
 
 // Hybrid Layout Generator: ad-network-card > ad-format-card > ad-slots-wrapper > ad-slot
 function generateHybridLayout() {
-  const container = document.getElementById('ad-container');
-  if (!container) return;
+  const container = document.getElementById('adContainer');  if (!container) return;
   container.innerHTML = '';
   Object.entries(networksConfig).forEach(([networkKey, networkData]) => {
     // Ad Network Card
