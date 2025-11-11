@@ -28,57 +28,50 @@ const networksConfig = {
   }
 };
 
-// Hybrid Layout Generator: ad-network-card > ad-format-card > ad-slots-wrapper > ad-slot
-function generateHybridLayout() {
-  const container = document.getElementById('adContainer');  if (!container) return;
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('adContainer');
+  if (!container) return;
+
   container.innerHTML = '';
+
   Object.entries(networksConfig).forEach(([networkKey, networkData]) => {
-    // Ad Network Card
-    const networkCard = document.createElement('div');
+    // Outer card for each ad network
+    const networkCard = document.createElement('section');
     networkCard.className = 'ad-network-card';
 
-    // Ad Network Header
-    const networkHeader = document.createElement('div');
-    networkHeader.className = 'ad-network-header';
-    const networkTitle = document.createElement('h2');
-    networkTitle.textContent = networkData.name;
-    networkHeader.appendChild(networkTitle);
-    networkCard.appendChild(networkHeader);
+    const header = document.createElement('div');
+    header.className = 'ad-network-header';
+    header.innerHTML = `<h2>${networkData.name}</h2>`;
+    networkCard.appendChild(header);
 
-    // Ad Formats (subcards)
+    // Each format (subcard)
     Object.entries(networkData.formats).forEach(([formatName, formatConfig]) => {
       const formatCard = document.createElement('div');
       formatCard.className = 'ad-format-card';
+      formatCard.setAttribute('data-format', formatName);
 
-      // Format Subheading
-      const formatTitle = document.createElement('h3');
-      formatTitle.textContent = formatName;
-      formatCard.appendChild(formatTitle);
+      const title = document.createElement('h3');
+      title.className = 'ad-format-title';
+      title.textContent = formatName;
+      formatCard.appendChild(title);
 
-      // Ad Slots Wrapper
-      const slotsWrapper = document.createElement('div');
-      slotsWrapper.className = 'ad-slots-wrapper';
+      const wrapper = document.createElement('div');
+      wrapper.className = 'ad-slots-wrapper';
+
+      // Generate 3 visible slots
       for (let i = 1; i <= 3; i++) {
-        const adSlot = document.createElement('div');
-        adSlot.className = 'ad-slot';
-        adSlot.setAttribute('data-network', networkKey);
-        adSlot.setAttribute('data-format', formatName);
-        adSlot.setAttribute('data-slot', i);
-        adSlot.style.height = formatConfig.height + 'px'; // Per-format height!
-        adSlot.textContent = `${formatName} #${i}`;
-        slotsWrapper.appendChild(adSlot);
+        const slot = document.createElement('div');
+        slot.className = 'ad-slot';
+        slot.textContent = `${formatName} - Slot ${i}`;
+        slot.style.height = `${formatConfig.height}px`;
+        wrapper.appendChild(slot);
       }
-      formatCard.appendChild(slotsWrapper);
+
+      formatCard.appendChild(wrapper);
       networkCard.appendChild(formatCard);
     });
+
     container.appendChild(networkCard);
   });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  generateHybridLayout();
 });
-
-function renderAds() {
-  generateHybridLayout();
-}
