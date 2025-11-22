@@ -1,4 +1,5 @@
-// Configuration for ad networks and formats
+// app.js - fixed hybrid layout (headings + visible ad slots)
+
 const networksConfig = {
   google: {
     name: 'Google AdSense',
@@ -28,11 +29,9 @@ const networksConfig = {
   }
 };
 
-// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('adContainer');
   if (!container) return;
-
   container.innerHTML = '';
 
   Object.entries(networksConfig).forEach(([networkKey, networkData]) => {
