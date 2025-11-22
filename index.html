@@ -1,36 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>alotofads.com — A place to view ads</title>
-   <meta name="description" content="alotofads.com — view ads by topic and network" />
-   <meta name="keywords" content="ads,advertisements,google,ezoic,ad networks" />
-   <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="alotofads.com — view ads by topic and network" />
+  <meta name="keywords" content="ads,advertisements,google,ezoic,ad networks" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand">alotofads.com</div>
-    <div class="controls">
-       <input id="searchInput" placeholder="Enter a topic (e.g., fitness, cars, tech)" />
-      <button id="searchBtn">Search</button>
-      <select id="topicSelector" aria-label="Popular topics"></select>
-      <button id="clearBtn" title="Reset">Reset</button>
-    </div>
-    <div id="privacyDashboard" class="privacy" aria-live="polite">
-      <strong>Privacy dashboard</strong>
-      <div id="privacyText">No networks loaded yet.</div>
-      <label>
-         <input id="togglePersonalized" type="checkbox" checked />
-        Allow personalized ads
-      </label>
-    </div>
   </header>
-  <section class="filters" aria-label="Ad Filters">
-    <label> <input type="checkbox" id="filterBanner" checked /> Banner/Display</label>
-    <label> <input type="checkbox" id="filterVideo" checked /> Video</label>
-    <label> <input type="checkbox" id="filterSidebar" checked /> Sidebar/Skyscraper</label>
-  </section>
   <main id="adContainer" role="main" aria-live="polite"></main>
   <script src="app.js"></script>
 </body>
