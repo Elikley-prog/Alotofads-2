@@ -4,14 +4,13 @@ const networksConfig = {
   google: {
     name: 'Google AdSense',
     formats: {
-      'Leaderboard': { height: 100 },
-      'Large Rectangle': { height: 290 },
-      'Medium Rectangle': { height: 260 },
-      'Mobile Banner': { height: 60 },
-      'Wide Skyscraper': { height: 610 },
+      'Display Banner': { height: 100 },
+      'In-Feed Ads': { height: 290 },
+      'In-Article Ads': { height: 260 },
       'Multiplex Ads': { height: 310 },
-      'Related Search Ads': { height: 100 },
-      'Video Ads': { height: 325 }
+      'Anchor Ads': { height: 100 },
+      'Vignette Ads': { height: 325 },
+      'Responsive Display Ads': { height: 290 }
     }
   },
   ezoic: {
