@@ -1,16 +1,18 @@
-// app.js - fixed hybrid layout (headings + visible ad slots)
+// AdSense Publisher ID
+const ADSENSE_CLIENT = "ca-pub-3293304771986381";
 
+// New Format Definitions
 const networksConfig = {
   google: {
     name: 'Google AdSense',
     formats: {
-      'Display Banner': { height: 100 },
-      'In-Feed Ads': { height: 290 },
-      'In-Article Ads': { height: 260 },
-      'Multiplex Ads': { height: 310 },
-      'Anchor Ads': { height: 100 },
-      'Vignette Ads': { height: 325 },
-      'Responsive Display Ads': { height: 290 }
+      'Display Banner': { height: 100, format: 'display' },
+      'In-Feed Ads': { height: 290, format: 'in-feed' },
+      'In-Article Ads': { height: 260, format: 'in-article' },
+      'Multiplex Ads': { height: 310, format: 'multiplex' },
+      'Anchor Ads': { height: 100, format: 'anchor' },
+      'Vignette Ads': { height: 325, format: 'vignette' },
+      'Responsive Display Ads': { height: 290, format: 'responsive' }
     }
   },
   ezoic: {
@@ -28,23 +30,31 @@ const networksConfig = {
   }
 };
 
+// Slot ID generator
+function slotId(name, num) {
+  return (
+    "slot-" +
+    name.toLowerCase().replace(/\s+/g, "-") +
+    "-" +
+    num
+  );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('adContainer');
   if (!container) return;
   container.innerHTML = '';
 
-  Object.entries(networksConfig).forEach(([networkKey, networkData]) => {
-    // Outer card for each ad network
+  Object.values(networksConfig).forEach((network) => {
     const networkCard = document.createElement('section');
     networkCard.className = 'ad-network-card';
 
     const header = document.createElement('div');
     header.className = 'ad-network-header';
-    header.innerHTML = `<h2>${networkData.name}</h2>`;
+    header.innerHTML = `<h2>${network.name}</h2>`;
     networkCard.appendChild(header);
 
-    // Each format (subcard)
-    Object.entries(networkData.formats).forEach(([formatName, formatConfig]) => {
+    Object.entries(network.formats).forEach(([formatName, formatInfo]) => {
       const formatCard = document.createElement('div');
       formatCard.className = 'ad-format-card';
       formatCard.setAttribute('data-format', formatName);
@@ -57,12 +67,63 @@ document.addEventListener('DOMContentLoaded', () => {
       const wrapper = document.createElement('div');
       wrapper.className = 'ad-slots-wrapper';
 
-      // Generate 3 visible slots
+      // Generate 3 slots per heading
       for (let i = 1; i <= 3; i++) {
+        const id = slotId(formatName, i);
         const slot = document.createElement('div');
         slot.className = 'ad-slot';
-        slot.textContent = `${formatName} - Slot ${i}`;
-        slot.style.height = `${formatConfig.height}px`;
+
+        let html = '';
+
+        // Responsive / Display
+        if (formatInfo.format === 'display' || formatInfo.format === 'responsive') {
+          html = `
+            <ins class="adsbygoogle"
+              style="display:block"
+              data-ad-client="${ADSENSE_CLIENT}"
+              data-ad-slot="${id}"
+              data-ad-format="auto"
+              data-full-width-responsive="true"></ins>
+          `;
+        }
+        // In-Feed
+        else if (formatInfo.format === 'in-feed') {
+          html = `
+            <ins class="adsbygoogle"
+              style="display:block"
+              data-ad-client="${ADSENSE_CLIENT}"
+              data-ad-slot="${id}"
+              data-ad-format="fluid"
+              data-ad-layout="image-top"></ins>
+          `;
+        }
+        // In-Article
+        else if (formatInfo.format === 'in-article') {
+          html = `
+            <ins class="adsbygoogle"
+              style="display:block;text-align:center;"
+              data-ad-layout="in-article"
+              data-ad-format="fluid"
+              data-ad-client="${ADSENSE_CLIENT}"
+              data-ad-slot="${id}"></ins>
+          `;
+        }
+        // Multiplex
+        else if (formatInfo.format === 'multiplex') {
+          html = `
+            <ins class="adsbygoogle"
+              style="display:block"
+              data-ad-format="autorelaxed"
+              data-ad-client="${ADSENSE_CLIENT}"
+              data-ad-slot="${id}"></ins>
+          `;
+        }
+        // Anchor & Vignette (auto-managed by Google)
+        else if (formatInfo.format === 'anchor' || formatInfo.format === 'vignette') {
+          html = `<div class="notice">This ad type is auto-managed by Google AdSense</div>`;
+        }
+
+        slot.innerHTML = html;
         wrapper.appendChild(slot);
       }
 
@@ -72,4 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.appendChild(networkCard);
   });
+
+  // Trigger AdSense
+  setTimeout(() => {
+    try {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {}
+  }, 200);
 });
