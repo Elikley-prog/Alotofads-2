@@ -126,6 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (formatInfo.format === 'anchor' || formatInfo.format === 'vignette') {
           html = `<div class="notice">This ad type is auto-managed by Google AdSense</div>`;
         }
+        else {
+          html = `
+            <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="${ADSENSE_CLIENT}"
+            data-ad-slot="${id}"
+            data-ad-format="auto"></ins>
+          `;
+        }
         slot.innerHTML = html;
         wrapper.appendChild(slot);
       }
