@@ -2,5 +2,16 @@
   "buildCommand": "npm run build || true",
   "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "routes": [
+    {
+      "src": "/ads\\.txt$",
+      "methods": ["GET"],
+      "dest": "/public/ads.txt"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
