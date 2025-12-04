@@ -3,10 +3,7 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/(?!ads\\.txt)(.*)",
-      "destination": "/index.html"
-    }
+  "routes": [
+    {"src": "/(?!static/)(?!ads\\.txt$).*", "dest": "/index.html"}
   ]
 }
