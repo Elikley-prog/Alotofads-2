@@ -3,15 +3,10 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/ads\\.txt$",
-      "methods": ["GET"],
-      "dest": "/public/ads.txt"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(?!ads\\.txt)(.*)",
+      "destination": "/index.html"
     }
   ]
 }
