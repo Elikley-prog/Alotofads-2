@@ -6,7 +6,7 @@ This repository contains a simple MVP demo showing:
 - Vertical list of ad networks (Google, Ezoic placeholders).
 - Horizontal scroller per ad format (banner, video, sidebar).
 - Rotation of ad unit IDs per format/zone to help avoid repeated ads.
-- Privacy dashboard and filters.
+- Future updates dashboard and filters.
 
 Important: This is a demo. Replace placeholder ad unit IDs and network scripts with your real IDs and follow each ad network's integration procedures and policy.
 
