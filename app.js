@@ -107,6 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         slot.innerHTML = html;
         slotsWrapper.appendChild(slot);
+                     // Push AdSense script for this slot
+             try {
+               (adsbygoogle = window.adsbygoogle || []).push({});
+             } catch (e) {
+               console.error('AdSense initialization error for slot ' + slotId, e);
+             }
       }
     }
     
@@ -155,10 +161,4 @@ document.addEventListener('DOMContentLoaded', () => {
   
   container.appendChild(ezoicNetwork);
   
-  // Push AdSense script
-  setTimeout(() => {
-    try {
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {}
-  }, 200);
 });
