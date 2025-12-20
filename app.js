@@ -1,30 +1,10 @@
 // AdSense Publisher ID
 const ADSENSE_CLIENT = "ca-pub-3293304771986381";
 
-// Array of 70 real numeric slot IDs
-// Organized as: 10 IDs per Google format (7 formats total)
+// OPTION B: Single real ad unit (the ONLY one created in AdSense)
+// This is the Display ad unit ID from your AdSense account
 const adSlotIds = [
-  // Display Banner ads (10 IDs)
-  "7643176552", "7643176553", "7643176554", "7643176555", "7643176556",
-  "7643176557", "7643176558", "7643176559", "7643176560", "7643176561",
-  // In-Feed Ads (10 IDs)
-  "7643176562", "7643176563", "7643176564", "7643176565", "7643176566",
-  "7643176567", "7643176568", "7643176569", "7643176570", "7643176571",
-  // In-Article Ads (10 IDs)
-  "7643176572", "7643176573", "7643176574", "7643176575", "7643176576",
-  "7643176577", "7643176578", "7643176579", "7643176580", "7643176581",
-  // Multiplex Ads (10 IDs)
-  "7643176582", "7643176583", "7643176584", "7643176585", "7643176586",
-  "7643176587", "7643176588", "7643176589", "7643176590", "7643176591",
-  // Anchor Ads (10 IDs)
-  "7643176592", "7643176593", "7643176594", "7643176595", "7643176596",
-  "7643176597", "7643176598", "7643176599", "7643176600", "7643176601",
-  // Vignette Ads (10 IDs)
-  "7643176602", "7643176603", "7643176604", "7643176605", "7643176606",
-  "7643176607", "7643176608", "7643176609", "7643176610", "7643176611",
-  // Responsive Display Ads (10 IDs)
-  "7643176612", "7643176613", "7643176614", "7643176615", "7643176616",
-  "7643176617", "7643176618", "7643176619", "7643176620", "7643176621"
+  "7643176552" // Display 1 - The only real ad unit
 ];
 
 let slotIndex = 0;
@@ -37,8 +17,8 @@ const networksConfig = {
       'In-Feed Ads': { height: 290, format: 'in-feed' },
       'In-Article Ads': { height: 260, format: 'in-article' },
       'Multiplex Ads': { height: 310, format: 'multiplex' },
-      'Anchor Ads': { height: 100, format: 'anchor' },
-      'Vignette Ads': { height: 325, format: 'vignette' },
+      'Anchor Ads': { height: 0, format: 'anchor' }, // Anchor - blank
+      'Vignette Ads': { height: 0, format: 'vignette' }, // Vignette - blank
       'Responsive Display Ads': { height: 290, format: 'responsive' }
     }
   },
@@ -76,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   googleHeader.textContent = networksConfig.google.name;
   googleNetwork.appendChild(googleHeader);
   
-  // For each Google format, create 10 ad slots in horizontal scroll
+  // For each Google format, create ad slots in horizontal scroll
   Object.entries(networksConfig.google.formats).forEach(([formatName, formatInfo]) => {
     const formatCard = document.createElement('div');
     formatCard.className = 'ad-format-card';
@@ -89,30 +69,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const slotsWrapper = document.createElement('div');
     slotsWrapper.className = 'ad-slots-wrapper';
     
-    // Create 10 ad slots for this format
-    for (let i = 0; i < 10; i++) {
+    // For Anchor and Vignette: Just one placeholder (leave blank)
+    // For other formats: Create single ad slot with the one real ID
+    if (formatInfo.format === 'anchor' || formatInfo.format === 'vignette') {
+      // Anchor/Vignette - leave blank (no ad code)
+      const slot = document.createElement('div');
+      slot.className = 'ad-slot';
+      slot.style.backgroundColor = '#f0f0f0';
+      slot.style.border = '1px solid #ddd';
+      slot.innerHTML = `<div class="notice">Auto Ads only (not manual)</div>`;
+      slotsWrapper.appendChild(slot);
+    } else {
+      // Create single ad slot for this format
       const slotId = getNextSlotId();
       if (slotId) {
         const slot = document.createElement('div');
         slot.className = 'ad-slot';
-        slot.style.height = formatInfo.height + 'px';
+        if (formatInfo.height) {
+          slot.style.height = formatInfo.height + 'px';
+        }
         
         const html = `
           <ins class="adsbygoogle"
-               style="display:inline-block;width:100%;${formatInfo.height ? 'height:' + formatInfo.height + 'px;' : ''}"
-               data-ad-client="${ADSENSE_CLIENT}"
-               data-ad-slot="${slotId}"
-               data-ad-format="${formatInfo.format}"></ins>
+            style="display:inline-block;width:100%;${formatInfo.height ? 'height:' + formatInfo.height + 'px;' : ''}"
+            data-ad-client="${ADSENSE_CLIENT}"
+            data-ad-slot="${slotId}"
+            data-ad-format="${formatInfo.format}"></ins>
         `;
         
         slot.innerHTML = html;
         slotsWrapper.appendChild(slot);
-                     // Push AdSense script for this slot
-             try {
-               (adsbygoogle = window.adsbygoogle || []).push({});
-             } catch (e) {
-               console.error('AdSense initialization error for slot ' + slotId, e);
-             }
+        
+        // Push AdSense script for THIS SPECIFIC SLOT INDIVIDUALLY
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          console.log('AdSense slot pushed for format: ' + formatName + ', slot ID: ' + slotId);
+        } catch (e) {
+          console.error('AdSense initialization error for slot ' + slotId, e);
+        }
       }
     }
     
