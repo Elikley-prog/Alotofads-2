@@ -2,29 +2,214 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>alotofads.com — A place to view ads</title>
   <meta name="description" content="alotofads.com — view ads by topic and network" />
   <meta name="keywords" content="ads,advertisements,google,ezoic,ad networks" />
+
   <link rel="stylesheet" href="styles.css" />
-    <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3293304771986381" crossorigin="anonymous"></script>
+
+  <!-- Google AdSense (load ONCE) -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3293304771986381"
+    crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <div class="disclaimer-box">
-    <strong>Website in Progress: Alotofads 1st generation</strong>
-    <div class="disclaimer-subtitle">Future generations will include:</div>
-    <ul>
-      <li>A search feature</li>
-      <li>More ad networks to browse</li>
-      <li>Fewer bugs</li>
-      <li>User friendly interface</li>
-    </ul>
-  </div>
+
+  <!-- Header -->
   <header class="topbar">
     <div class="brand">alotofads.com</div>
+
+    <div class="controls">
+      <input id="searchInput" placeholder="Enter a topic (e.g., fitness, cars, tech)" />
+      <button id="searchBtn">Search</button>
+      <select id="topicSelector" aria-label="Popular topics"></select>
+      <button id="clearBtn" title="Reset">Reset</button>
+    </div>
+
+    <div id="privacyDashboard" class="privacy" aria-live="polite">
+      <strong>Website in Progress: Alotofads 1st generation</strong>
+      <div style="font-size:12px; margin-top:6px;">
+        Future generations will include:
+        <ul>
+          <li>A search feature</li>
+          <li>More ad networks to browse</li>
+          <li>Less bugs</li>
+          <li>User friendly interface</li>
+        </ul>
+      </div>
+    </div>
   </header>
-  <main id="adContainer" role="main" aria-live="polite"></main>
-  <script src="app.js"></script>
+
+  <!-- Filters -->
+  <section class="filters" aria-label="Ad Filters">
+    <label><input type="checkbox" id="filterBanner" checked /> Banner / Display</label>
+    <label><input type="checkbox" id="filterVideo" checked /> Video</label>
+    <label><input type="checkbox" id="filterSidebar" checked /> Sidebar / Skyscraper</label>
+  </section>
+
+  <!-- Main content -->
+  <main id="adContainer" role="main">
+
+    <!-- ===================== -->
+    <!-- Google AdSense Section -->
+    <!-- ===================== -->
+    <section class="ad-network-section">
+      <h2>Google AdSense</h2>
+
+      <!-- ================= -->
+      <!-- Display Banner Ads -->
+      <!-- ================= -->
+      <div class="ad-format-group" data-format="Display Banner">
+        <h3>Display Banner</h3>
+
+        <div class="ad-slots-row">
+
+          <!-- Display 1 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="7643176552"></ins>
+
+          <!-- Display 2 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="8933998846"></ins>
+
+          <!-- Display 3 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="6666109914"></ins>
+
+          <!-- Display 4 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="6345889173"></ins>
+
+          <!-- Display 5 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="7620917174"></ins>
+
+          <!-- Display 6 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="3903558666"></ins>
+
+          <!-- Display 7 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="9895726729"></ins>
+
+          <!-- Display 8 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="8582645056"></ins>
+
+          <!-- Display 9 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="7269563384"></ins>
+
+          <!-- Display 10 -->
+          <ins class="adsbygoogle"
+            style="display:inline-block;width:728px;height:90px"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="4997805023"></ins>
+
+        </div>
+      </div>
+
+      <!-- ============== -->
+      <!-- Multiplex Ads -->
+      <!-- ============== -->
+      <div class="ad-format-group" data-format="Multiplex Ads">
+        <h3>Multiplex Ads</h3>
+
+        <div class="ad-slots-row">
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="7979191586"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="1247080510"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="3876295044"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="3304792860"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="9678629529"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="2563213374"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="1250131709"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="4423908196"></ins>
+
+          <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-format="autorelaxed"
+            data-ad-client="ca-pub-3293304771986381"
+            data-ad-slot="7658970848"></ins>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Initialize all AdSense ads ONCE -->
+  <script>
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.adsbygoogle').forEach(() => {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          console.warn('AdSense init skipped', e);
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
