@@ -1,8 +1,6 @@
 // AdSense Publisher ID
 const ADSENSE_CLIENT = "ca-pub-3293304771986381";
 
-// OPTION B: Single real ad unit (the ONLY one created in AdSense)
-// This is the Display ad unit ID from your AdSense account
 const adSlotIds = [
  // Multiplex Ads (10 units - 300px height)
  "7979191586", // Multiplex 1
@@ -16,6 +14,7 @@ const adSlotIds = [
  "7658970848", // Multiplex 9
  "2208808394", // Multiplex 10
  // Display Ads (9 units - 90px height)
+ "7643176552", // Display 1
  "8933998846", // Display 2
  "6666109914", // Display 3
  "6345889173", // Display 4
