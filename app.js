@@ -4,9 +4,28 @@ const ADSENSE_CLIENT = "ca-pub-3293304771986381";
 // OPTION B: Single real ad unit (the ONLY one created in AdSense)
 // This is the Display ad unit ID from your AdSense account
 const adSlotIds = [
-  "7643176552" // Display 1 - The only real ad unit
+ // Multiplex Ads (10 units - 300px height)
+ "7979191586", // Multiplex 1
+ "1247080510", // Multiplex 2
+ "3876295044", // Multiplex 3
+ "3304792860", // Multiplex 4
+ "9678629529", // Multiplex 5
+ "2563213374", // Multiplex 6
+ "1250131709", // Multiplex 7
+ "4423908196", // Multiplex 8
+ "7658970848", // Multiplex 9
+ "2208808394", // Multiplex 10
+ // Display Ads (9 units - 90px height)
+ "8933998846", // Display 2
+ "6666109914", // Display 3
+ "6345889173", // Display 4
+ "7620917174", // Display 5
+ "3903558666", // Display 6
+ "9895726729", // Display 7
+ "8582645056", // Display 8
+ "7269563384", // Display 9
+ "4997805023"  // Display 10
 ];
-
 let slotIndex = 0;
 
 const networksConfig = {
